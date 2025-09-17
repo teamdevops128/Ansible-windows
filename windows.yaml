@@ -1,9 +1,9 @@
 all:
   hosts:
     winserver1:
-      ansible_host: 10.1.1.25       # Replace with your Windows server IP/DNS
-      ansible_user: AdminUser       # Replace with your Windows user
-      ansible_password: "SuperSecretPassword123"  # Replace or inject via Azure secrets
+      ansible_host: <server IP/DNS>
+      ansible_user: "{{ lookup('env', 'WIN_USERNAME') }}"
+      ansible_password: "{{ lookup('env', 'WIN_PASSWORD') }}"
       ansible_connection: winrm
       ansible_winrm_transport: basic
       ansible_port: 5985
