@@ -1,5 +1,5 @@
 trigger:
-  - main   # or whichever branch you want
+  - main
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -10,9 +10,13 @@ stages:
     jobs:
       - job: RunAnsible
         displayName: "Execute Ansible Playbooks"
+        variables:
+          WIN_USERNAME: $(win_username)   
+          WIN_PASSWORD: $(win_password) 
+
         steps:
 
-          # Step 1: Install dependencies
+          # Install dependencies
           - task: Bash@3
             displayName: "Install Ansible & dependencies"
             inputs:
@@ -23,17 +27,23 @@ stages:
                 pip3 install ansible pywinrm
                 ansible-galaxy collection install -r requirements.yml
 
-          # Step 2: Run Connectivity Test
+          # Run Connectivity Test
           - task: Bash@3
             displayName: "Run Ansible Connectivity Check"
+            env:
+              WIN_USERNAME: $(win_username)
+              WIN_PASSWORD: $(win_password)
             inputs:
               targetType: inline
               script: |
                 ansible-playbook playbooks/connectivity.yml
 
-          # Step 3: Install Notepad++
+          # Install Notepad++
           - task: Bash@3
             displayName: "Run Notepad++ Install"
+            env:
+              WIN_USERNAME: $(win_username)
+              WIN_PASSWORD: $(win_password)
             inputs:
               targetType: inline
               script: |
