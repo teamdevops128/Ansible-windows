@@ -1,8 +1,8 @@
 trigger:
-  - main  
+  - main   # or whichever branch you want
 
 pool:
-  vmImage: 
+  vmImage: 'ubuntu-latest'
 
 stages:
   - stage: Ansible_Test
@@ -29,7 +29,7 @@ stages:
             inputs:
               targetType: inline
               script: |
-                ansible-playbook playbooks/connectivity.yml -i inventories/windows.yml
+                ansible-playbook playbooks/connectivity.yml
 
           # Step 3: Install Notepad++
           - task: Bash@3
@@ -37,4 +37,4 @@ stages:
             inputs:
               targetType: inline
               script: |
-                ansible-playbook playbooks/install_notepadpp.yml -i inventories/windows.yml
+                ansible-playbook playbooks/install_notepadpp.yml
