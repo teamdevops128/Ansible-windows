@@ -1,0 +1,12 @@
+---
+- name: Test Ansible connectivity & gather facts
+  hosts: all
+  gather_facts: yes
+
+  tasks:
+    - name: Ping Windows host
+      win_ping:
+
+    - name: Show OS facts
+      debug:
+        var: ansible_facts.os_name
